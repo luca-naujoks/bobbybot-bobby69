@@ -1,0 +1,5 @@
+Licence for Bobby Bot Python 3.9 Discord Bot
+############################################
+
+This Bot is my own creation with some nice abilitys
+

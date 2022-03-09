@@ -28,6 +28,13 @@ class Fun(commands.Cog):
         source = FFmpegPCMAudio('Rickrole.mp3')
         player = voice.play(source)
 
+    @commands.command()
+    async def whereAmI(self, ctx):
+
+        message = f'You are in {ctx.message.guild.name} in the {ctx.message.channel.mention} channel'
+        await ctx.message.author.send(message)
+
+
 
 
 

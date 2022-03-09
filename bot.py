@@ -7,6 +7,7 @@ import os
 
 class BobbyBot(commands.Bot):
 
+
     def __init__(self, token: str):
         self.token = token
         super().__init__(command_prefix=commands.when_mentioned_or(""),
@@ -32,6 +33,9 @@ class BobbyBot(commands.Bot):
                     self.load_extension("cogs." + cog)
                 except Exception as e:
                     print("Loading '{}' failed\n{}: {}".format(cog, type(e).__name__, e))
+
+
+
 
 
 

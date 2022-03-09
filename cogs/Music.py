@@ -1,4 +1,5 @@
 import asyncio
+import datetime
 import random
 
 from async_timeout import timeout
@@ -7,6 +8,18 @@ import youtube_dl
 from discord.ext import commands
 from discord.ext.commands import Context
 from bot import BobbyBot
+
+import mysql.connector
+
+mydb = mysql.connector.connect(
+  host="192.168.178.32",
+  user="bobby",
+  password="08Kasper06!By",
+  database="krautundrueben",
+  port="3306"
+)
+
+
 
 
 FFMPEG_OPTIONS = {
@@ -118,6 +131,7 @@ class Music(commands.Cog):
 
         return player
 
+
     @commands.command(name="play", aliases=["p"])
 
     async def play_command(self, ctx: Context, *, url):
@@ -147,6 +161,8 @@ class Music(commands.Cog):
             else:
                 await ctx.voice_client.move_to(voice_channel)
 
+
+
         ytdl = youtube_dl.YoutubeDL(ytdl_options)
         data = ytdl.extract_info(url, download=False, process=False)
 
@@ -175,11 +191,25 @@ class Music(commands.Cog):
                 except IndexError:
                     raise Exception("YTDL: No matches")
 
+
         player = self.get_player(ctx)
         source = SongSource(ctx, discord.FFmpegPCMAudio(info["url"], **FFMPEG_OPTIONS), data=info)
         if (not player.queue.empty()) or (player.current is not None and player.queue.empty()):
             await ctx.send("Added to queue: {}".format(info["title"]))
         await player.queue.put(source)
+
+        time_stamp = datetime.datetime.now()
+
+        mycursor = mydb.cursor()
+
+        sql = f"USE BobbyBot; INSERT INTO MUSIC (MEMBER, TIME_STAMP, SONG, SERVER) VALUES ('{ctx.message.author}', '{time_stamp}', '{info['title']}', '{ctx.message.guild.name}');"
+
+        mycursor.execute(sql)
+
+        mydb.commit()
+        print(sql)
+
+
 
     @commands.command(name="undo")
     async def undo_command(self, ctx):
@@ -302,9 +332,10 @@ class Music(commands.Cog):
             return await ctx.send("I´m not connected to a voice channel")
         if (random.randint(0, 1) == 0):
             await ctx.message.add_reaction('🖕')
-        await ctx.send("**Sucsessfully disconected**")
+        await ctx.send("**Successfully disconnected**")
 
         await self.cleanup(ctx.guild)
+
 
 def setup(bot: BobbyBot):
     bot.add_cog(Music(bot))

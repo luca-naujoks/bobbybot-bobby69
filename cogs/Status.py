@@ -13,6 +13,7 @@ class Status(commands.Cog):
         self.activities = [
             discord.Game('Bobby Bot™'),
             discord.Activity(type=discord.ActivityType.listening, name='Mareike <3')
+
         ]
         self.activity.start()
 

@@ -1,6 +1,4 @@
-import asyncio
-import datetime
-import random
+from __future__ import unicode_literals
 
 from async_timeout import timeout
 import discord
@@ -30,7 +28,7 @@ class MP3(commands.Cog):
 
     @commands.command(name="mp3_output", aliases=["convert", "mp3"])
     async def mp3_converter(self, ctx: Context, *, url):
-        ytdl_options = {
+        ydl_opts = {
             'format': 'bestaudio/best',
             'extractaudio': True,
             'audioformat': 'mp3',
@@ -45,8 +43,10 @@ class MP3(commands.Cog):
             'default_search': 'auto',
             'source_address': '0.0.0.0',
         }
-        ytdl = youtube_dl.YoutubeDL(ytdl_options)
-        ytdl.download(url)
+        await ctx.send("Working on mp3")
+        with youtube_dl.YoutubeDL(ydl_opts) as ydl:
+            ydl.download(url)
+        await ctx.send(file=discord.File(ctx))
 
 
 

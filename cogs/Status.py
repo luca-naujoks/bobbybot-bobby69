@@ -22,21 +22,20 @@ class Status(commands.Cog):
         current_activity = self.activities.pop(0)
         self.activities.append(current_activity)
         await self.bot.change_presence(activity=current_activity)
-        vc = self.bot.get_channel(864516823739269140)
-        await vc.edit(name="♡Rotlichtviertel♡")
+
 
     @activity.before_loop
     async def before_activity(self):
         await self.bot.wait_until_ready()
 
-    @client.event
+    """@client.event
     async def on_member_join(member):
         guild = client.get_guild()
         await member.send("Hi herzlich willkommen auf dem server")
         channel = await client.fetch_channel(866252599668768798)
         await channel.send(f"Wilkommen {member.mention}")
         role = discord.utils.get(guild.roles, name="Member")
-        await member.add_roles(role)
+        await member.add_roles(role)"""
 
     @client.event
     async def on_ready(self):

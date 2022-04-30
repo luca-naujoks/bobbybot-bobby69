@@ -12,7 +12,7 @@ class Status(commands.Cog):
         self.bot = bot
         self.activities = [
             discord.Game('Bobby Bot™'),
-            discord.Activity(type=discord.ActivityType.listening, name='Mareike <3')
+
 
         ]
         self.activity.start()
@@ -23,33 +23,12 @@ class Status(commands.Cog):
         self.activities.append(current_activity)
         await self.bot.change_presence(activity=current_activity)
 
-
     @activity.before_loop
     async def before_activity(self):
         await self.bot.wait_until_ready()
 
-    """@client.event
-    async def on_member_join(member):
-        guild = client.get_guild()
-        await member.send("Hi herzlich willkommen auf dem server")
-        channel = await client.fetch_channel(866252599668768798)
-        await channel.send(f"Wilkommen {member.mention}")
-        role = discord.utils.get(guild.roles, name="Member")
-        await member.add_roles(role)"""
-
-    @client.event
-    async def on_ready(self):
-        print('We have logged in as {0.user}'.format(client))
-
-    @client.event
-    async def on_ready(self):
-        print("Bot is ready to go.")
-
-
-
 
 # info command
-
     @commands.command(name="info")
     async def info_command(self, ctx: Context):
         await ctx.send("Bot Status= online\n---------------------\nBefehle Benötigen kein Präfix")

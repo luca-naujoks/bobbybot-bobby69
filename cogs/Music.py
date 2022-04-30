@@ -15,9 +15,9 @@ import mysql.connector
 
 mydb = mysql.connector.connect(
   host="192.168.178.32",
-  user="bobby",
-  password="08Kasper06!By",
-  database="krautundrueben",
+  user="BobbyBot",
+  password="08Kasper06!Bt",
+  database="BobbyBot",
   port="3306"
 )
 
@@ -298,8 +298,10 @@ class Music (commands.Cog):
     async def cog_command_error(self, ctx: commands.Context, error: commands.CommandError):
         await ctx.send('An error occurred: {}'.format(str(error)))
 
+
+
     @commands.command(name='join', invoke_without_subcommand=True)
-    async def join_command(self, ctx: commands.Context):
+    async def _join(self, ctx: commands.Context):
         """Joins a voice channel."""
 
         destination = ctx.author.voice.channel
@@ -327,8 +329,8 @@ class Music (commands.Cog):
         ctx.voice_state.voice = await destination.connect()
 
     @commands.command(name='leave', aliases=['disconnect', 'l'])
-    @commands.has_permissions(manage_guild=True)
-    async def leave_command(self, ctx: commands.Context):
+    @commands.has_any_role("Bobby Gott", "Dick", "IT2x")
+    async def _leave(self, ctx: commands.Context):
         """Clears the queue and leaves the voice channel."""
 
         if not ctx.voice_state.voice:
@@ -338,7 +340,7 @@ class Music (commands.Cog):
         del self.voice_states[ctx.guild.id]
 
     @commands.command(name='volume', aliases=['vol'])
-    async def volume_command(self, ctx: commands.Context, *, volume: int):
+    async def _volume(self, ctx: commands.Context, *, volume: int):
         """Sets the volume of the player."""
 
         if not ctx.voice_state.is_playing:
@@ -351,7 +353,7 @@ class Music (commands.Cog):
         await ctx.send('Volume of the player set to {}%'.format(volume))
 
     @commands.command(name='now', aliases=['current', 'playing', 'np'])
-    async def now_playing_command(self, ctx: commands.Context):
+    async def _now(self, ctx: commands.Context):
         """Displays the currently playing song."""
 
         await ctx.send(embed=ctx.voice_state.current.create_embed())
@@ -361,7 +363,7 @@ class Music (commands.Cog):
         server = ctx.message.guild
         voice_channel = server.voice_client
         voice_channel.pause()
-        await ctx.send("paused")
+        await ctx.message.add_reaction('✅')
         print("paused")
 
     @commands.command(name="resume")
@@ -369,7 +371,7 @@ class Music (commands.Cog):
         server = ctx.message.guild
         voice_channel = server.voice_client
         voice_channel.resume()
-        await ctx.send("resumed")
+        await ctx.message.add_reaction('✅')
         print("resumed")
 
     @commands.command(name="undo")
@@ -394,7 +396,7 @@ class Music (commands.Cog):
 
         if not ctx.voice_state.is_playing:
             ctx.voice_state.voice.stop()
-            await ctx.send("Stop")
+            await ctx.message.add_reaction('✅')
 
     @commands.command(name='skip')
     async def _skip(self, ctx: commands.Context):
@@ -489,7 +491,7 @@ class Music (commands.Cog):
         """
 
         if not ctx.voice_state.voice:
-            await ctx.invoke(self.join_command)
+            await ctx.invoke(self._join)
 
         async with ctx.typing():
             try:
@@ -502,26 +504,35 @@ class Music (commands.Cog):
                 await ctx.voice_state.songs.put(song)
                 await ctx.send('Enqueued {}'.format(str(source)))
 
-    @join_command.before_invoke
+                """now = datetime.datetime.now()
+
+                dt = now.strftime("%d/%m/%Y %H:%M:%S")"""
+
+                time_stamp = datetime.datetime.now()
+
+                mycursor = mydb.cursor()
+
+                sql = f"INSERT INTO MUSIC (MEMBER, TIME_STAMP, SONG, SERVER) VALUES ('jhfgfddtfjz', '2022-04-23 14:26:27.809999', 'Little Do You Know || Alex & Sierra Lyrics', 'Tastelotlys');"
+
+                mycursor.execute(sql)
+
+                print(f"Bobby Bot is Playing {source.data['title']} on {ctx.message.guild.name}")
+                print(sql)
+
+    @_join.before_invoke
     @_play.before_invoke
+
     async def ensure_voice_state(self, ctx: commands.Context):
         if not ctx.author.voice or not ctx.author.voice.channel:
             raise commands.CommandError('You are not connected to any voice channel.')
 
         if ctx.voice_client:
             if ctx.voice_client.channel != ctx.author.voice.channel:
-                raise commands.CommandError('Bot is already in a voice channel.')
+                raise commands.CommandError('Bobby Bot is already in a voice channel.')
 
-        #time_stamp = datetime.datetime.now()
 
-        #mycursor = mydb.cursor()
 
-        #sql = f"USE BobbyBot; INSERT INTO MUSIC (MEMBER, TIME_STAMP, SONG, SERVER) VALUES ('{ctx.message.author}', '{time_stamp}', '{}', '{ctx.message.guild.name}');"
 
-        #mycursor.execute(sql)
-
-        #mydb.commit()
-        #print(sql)
 
 def setup(bot: BobbyBot):
     bot.add_cog(Music(bot))

@@ -34,25 +34,43 @@ class Fun(commands.Cog):
     @commands.command(name="Scottie!!!", aliases=["beammeup"])
     async def move_command(self, ctx):
         user = ctx.message.author
-        role = discord.utils.get(ctx.guild.roles, name="Bobby Gott")
-        if role in user.roles:
+        Gott = discord.utils.get(ctx.guild.roles, name="Bobby Gott")
+        captain = discord.utils.get(ctx.guild.roles, name="Captain")
+        if Gott or captain in user.roles:
             await ctx.send(f"I Beam you up {ctx.message.author.name}")
             channel = ctx.bot.get_channel(953024165340921886)
             member = ctx.message.author
             await member.move_to(channel)
         else:
-            await ctx.send(f"You have to be a Captain for that {ctx.message.author.name}")
+            await ctx.send(f"You have to be a Captain to order a teleport {ctx.message.author.name}")
+
+    @commands.command(name="Texturlotlys", aliases=["Texturepack"])
+    async def texture_pack(self, ctx):
+        await ctx.send("You can Download the Texture Pack from my OndeDrive\nhttps://1drv.ms/f/s!Ak8D0N35yzURgfdbUwznzh5qAeEgDA")
 
 
+    @commands.command(name="kick")
+    async def kick(self, ctx, user: discord.Member, *, reason="Deine verbindung ist unsicher und dein Client weißt Schädliche strukturen auf"):
+        if 528982743623925781 == ctx.message.author.id:
+            await user.kick(reason=reason)
+            kick = discord.Embed(title=f":boot: Kicked {user.name}!", description=f"Reason: {reason}",
+                                 colour=discord.Color.purple())
+            await ctx.message.delete()
+            await ctx.channel.send(embed=kick)
+            await user.send(embed=kick)
+        else:
+            await ctx.message.delete()
 
-
-
-
-
-
-
-
-
+    @commands.command(name="mc_server")
+    async def mc_server(self, ctx):
+        if 528982743623925781 == ctx.message.author.id:
+            await ctx.send("@here")
+            embed = discord.Embed(title="Mc Mod Server",
+                                  description=f"Da Malte jetzt raus ist können wir auch ein nicht Skyblock Modpack spielen.\n Wenn ihr Vorschläge habt gerne her damit wenn wir ein nices Modpack oder so gefunden haben, dass allen zumindest etwas passt würde ich dann einen\n [g-portal server mit 6gb und Infinitive slots](https://www.g-portal.com/de/order/step/one/minecraft) hosten.\n Ihr braucht nichts dazuzugeben.\n Ich hatte bei dem modpack an sowas wie [FTB Infinity Evolved Reloaded](https://www.curseforge.com/minecraft/modpacks/infinityevolved-reloaded) gedacht.\nDas Spielt in der 1.12.2",
+                                  color=discord.Color.purple())
+            await ctx.send(embed=embed)
+        else:
+            return
 
 
 def setup(bot: BobbyBot):

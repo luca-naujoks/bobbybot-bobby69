@@ -62,7 +62,7 @@ class Player:
             if not self.loop:
                 self.current = None
                 try:
-                    async with timeout(99999999999999999999999999999999999999999999999999999999):  # 2 Minutes timeout
+                    async with timeout(999):  # 2 Minutes timeout
                         self.current = await self.queue.get()
                 except TimeoutError:
                     self.destroy(self._guild)

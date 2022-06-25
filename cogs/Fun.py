@@ -11,9 +11,14 @@ class Fun(commands.Cog):
     def __init__(self, bot: BobbyBot):
         self.bot = bot
 
+    def HEY(self):
+        print("HEY")
+
+
     @commands.command(name="lonely")
     async def lonely_command(self, ctx):
         await ctx.send(f'Ich auch {ctx.message.author} Ich auch =(')
+
 
 
     # info über den Bot (you command)
@@ -67,6 +72,18 @@ class Fun(commands.Cog):
             await ctx.send("@here")
             embed = discord.Embed(title="Mc Mod Server",
                                   description=f"Da Malte jetzt raus ist können wir auch ein nicht Skyblock Modpack spielen.\n Wenn ihr Vorschläge habt gerne her damit wenn wir ein nices Modpack oder so gefunden haben, dass allen zumindest etwas passt würde ich dann einen\n [g-portal server mit 6gb und Infinitive slots](https://www.g-portal.com/de/order/step/one/minecraft) hosten.\n Ihr braucht nichts dazuzugeben.\n Ich hatte bei dem modpack an sowas wie [FTB Infinity Evolved Reloaded](https://www.curseforge.com/minecraft/modpacks/infinityevolved-reloaded) gedacht.\nDas Spielt in der 1.12.2",
+                                  color=discord.Color.purple())
+            await ctx.send(embed=embed)
+        else:
+            return
+
+
+    @commands.command(name="mc.server")
+    async def mc_server(self, ctx):
+        if 528982743623925781 == ctx.message.author.id:
+            await ctx.send("@here")
+            embed = discord.Embed(title="Mc Mod Server",
+                                  description=f"Ich habe mich jetzt erstmal für das [FTB Infinity Reloaded](https://www.curseforge.com/minecraft/modpacks/infinityevolved-reloaded/files) Modpack entschieden.\nDafür müsst ihr aber die [CurseForge App](https://download.curseforge.com/) Herunterladen und das Modpack dort Installieren (Soweit ich das weiß).\nIch würde den server dann zu Freitag Mittag/Nachmittag dann Mieten.\nPasst das Jedem?\nIhr könnt gerne noch eins zwei weitere leute nach einladen müssen nur wegen der Performance Gucken",
                                   color=discord.Color.purple())
             await ctx.send(embed=embed)
         else:

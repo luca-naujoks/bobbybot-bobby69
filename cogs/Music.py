@@ -155,7 +155,7 @@ class Song:
     def create_embed(self):
         embed = (discord.Embed(title='Now playing',
                                description='```css\n{0.source.title}\n```'.format(self),
-                               color=discord.Color.blurple())
+                               color=discord.Color.purple())
                  .add_field(name='Duration', value=self.source.duration)
                  .add_field(name='Requested by', value=self.requester.mention)
                  .add_field(name='Uploader', value='[{0.source.uploader}]({0.source.uploader_url})'.format(self))
@@ -329,7 +329,7 @@ class Music (commands.Cog):
         ctx.voice_state.voice = await destination.connect()
 
     @commands.command(name='leave', aliases=['disconnect', 'l'])
-    @commands.has_any_role("Bobby Gott", "Dick", "IT2x")
+
     async def _leave(self, ctx: commands.Context):
         """Clears the queue and leaves the voice channel."""
 
@@ -518,6 +518,8 @@ class Music (commands.Cog):
 
                 print(f"Bobby Bot is Playing {source.data['title']} on {ctx.message.guild.name}")
                 print(sql)
+                mydb.commit()
+
 
     @_join.before_invoke
     @_play.before_invoke

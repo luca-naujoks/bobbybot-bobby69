@@ -8,7 +8,7 @@ import time
 
 client = discord.Client()
 
-
+e = ""
 class BobbyBot(commands.Bot):
 
     def __init__(self, token: str):
@@ -39,18 +39,10 @@ class BobbyBot(commands.Bot):
                     self.load_extension("cogs." + cog)
                 except Exception as e:
                     print("Loading Module: '{}' failed\n{}: {}".format(cog, type(e).__name__, e))
-                    counter += 1
-        if counter == 0:
-            e += "Modules"
-        if counter == 1:
-            e += "Module"
-        if counter > 1:
-            e += "Modules"
-
         print(f"\n----------------------------------------------------------\nLoading complete")
         print("----------------------------------------------------------")
         time.sleep(0.5)
-        print(f"\nBasic Bot Systems are running and {counter} {e} Faild to load")
+        print(f"\nAll Basic Systems are running")
         time.sleep(0.1)
         print(f"\nBobbyBot was successfully logged in at {dt}\n\n")
 

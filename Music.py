@@ -12,7 +12,7 @@ from bot import BobbyBot
 import mysql.connector
 
 mydb = mysql.connector.connect(
-  host="192.168.178.32",
+  host="server",
   user="bobby",
   password="08Kasper06!By",
   database="krautundrueben",
@@ -251,7 +251,7 @@ class Music(commands.Cog):
 
         if not vc or not vc.is_connected():
             embed = discord.Embed(title="", description="I'm not connected to a voice channel",
-                                  color=discord.Color.green())
+                                  color=discord.Color.purple())
             return await ctx.send(embed=embed)
 
         if vc.is_paused():
@@ -269,13 +269,13 @@ class Music(commands.Cog):
 
         if not vc or not vc.is_connected():
             embed = discord.Embed(title="", description="I'm not connected to a voice channel",
-                                  color=discord.Color.green())
+                                  color=discord.Color.purple())
             return await ctx.send(embed=embed)
 
         player = self.get_player(ctx)
         if not player.current:
             embed = discord.Embed(title="", description="I am currently not playing anything",
-                                  color=discord.Color.green())
+                                  color=discord.Color.purple())
             return await ctx.send(embed=embed)
 
         seconds = int(vc.source.data["duration"]) % (24 * 3600)
@@ -290,7 +290,7 @@ class Music(commands.Cog):
 
         embed = discord.Embed(title="",
                               description=f"[{vc.source.data['title']}] [{vc.source.requester.mention}] | `{duration}`",
-                              color=discord.Color.green())
+                              color=discord.Color.purple())
         embed.set_author(icon_url=self.bot.user.avatar_url, name=f"Now Playing 🎶")
         await ctx.send(embed=embed)
 
@@ -303,7 +303,7 @@ class Music(commands.Cog):
 
         if not vc or not vc.is_connected():
             embed = discord.Embed(title="", description="I'm not connected to a voice channel",
-                                  color=discord.Color.green())
+                                  color=discord.Color.purple())
             return await ctx.send(embed=embed)
 
         player = self.get_player(ctx)

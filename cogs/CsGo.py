@@ -77,11 +77,6 @@ class CsGo(commands.Cog):
 
                 await ctx.send(f"Team 1  bitte bannt zwei maps verfügbar sind:")
                 await ctx.send(offline)
-                await ctx.send()
-                await ctx.send()
-                await ctx.send()
-                await ctx.send()
-                await ctx.send()
 
 
 

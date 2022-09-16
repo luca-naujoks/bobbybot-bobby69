@@ -9,7 +9,7 @@ class League_of_Legends(commands.Cog):
     def __init__(self, bot: BobbyBot):
         self.bot = bot
 
-    @commands.command(name="lol", aliasses=["LoL", "League"])
+    @commands.command(name="lol", aliases=["League"])
     async def Leauge_command(self, ctx):
         if ctx.author.voice is None:
             await ctx.send("please connect to a voice channel")

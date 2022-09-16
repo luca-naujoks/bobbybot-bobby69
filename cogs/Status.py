@@ -35,7 +35,7 @@ class Status(commands.Cog):
 
 
 # info command
-    @commands.command(name="info")
+    @commands.command(name="info", aliases=[])
     async def info_command(self, ctx: Context):
         await ctx.send("Wozu brauchst du infos/hilfe?(Bot/Casino)")
         try:

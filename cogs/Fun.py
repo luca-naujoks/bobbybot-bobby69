@@ -1,7 +1,11 @@
 import discord
+import aiohttp
 from discord.ext import commands
 from discord.ext.commands import Context
 from bot import BobbyBot
+from waifuim import WaifuAioClient
+from pytube import YouTube
+import os
 from discord import FFmpegPCMAudio
 
 client = discord.Client
@@ -11,17 +15,41 @@ class Fun(commands.Cog):
     def __init__(self, bot: BobbyBot):
         self.bot = bot
 
-    def HEY(self):
-        print("HEY")
-
-
     @commands.command(name="lonely")
     async def lonely_command(self, ctx):
-        await ctx.send(f'Ich auch {ctx.message.author} Ich auch =(')
+        selected_tag1 = ""
+        slected_tag2 = ""
+
+
+        await ctx.message.add_reaction('❤')
+        await ctx.send(f'Heyy hoffentlich jetzt nicht mehr =D\n Btw Brauchst du eine waifu?')
+        message = await self.bot.wait_for('message',
+                                          check=lambda m: m.author == ctx.author and m.channel == ctx.channel,
+                                          timeout=30.0)
+        if message.content.lower() == "ja":
+            HEADERS = {'User-Agent': f'aiohttp/{aiohttp.__version__}; YourAppName'}
+            url = "https://api.waifu.im/random/?excluded_files=4401.jpeg" \
+                  "&excluded_files=3133" \
+                  "&gif=false" \
+                  "&included_tags=maid" \
+                  "&included_tags=oppai" \
+                  "&included_tags=ass" \
+                  "&is_nsfw=true"
+
+            session = aiohttp.ClientSession()
+
+            async with session.get(url, headers=HEADERS) as resp:
+                api = await resp.json()
+                if resp.status in {200, 201}:
+                    url = api['images'][0]['url']
+                    await ctx.send(url)
+                else:
+                    error = api['detail']
+            await session.close()
 
 
 
-    # info über den Bot (you command)
+
     @commands.command(name="Bot")
     async def botinfo(self, ctx: Context):
         await ctx.send("\nIch bin Bobby.\nIch kann einiege befehle, welche du mit info einsehen kannst.")
@@ -32,7 +60,6 @@ class Fun(commands.Cog):
         await ctx.message.author.send(message)
 
     @commands.command(name="moveme", aliases=["move"])
-    @commands.has_any_role("Bobby Gott", "Dick")
     async def move_command(self, ctx, member: discord.Member, channel: discord.VoiceChannel):
         await member.move_to(channel)
 
@@ -66,28 +93,17 @@ class Fun(commands.Cog):
         else:
             await ctx.message.delete()
 
-    @commands.command(name="mc_server")
-    async def mc_server(self, ctx):
-        if 528982743623925781 == ctx.message.author.id:
-            await ctx.send("@here")
-            embed = discord.Embed(title="Mc Mod Server",
-                                  description=f"Da Malte jetzt raus ist können wir auch ein nicht Skyblock Modpack spielen.\n Wenn ihr Vorschläge habt gerne her damit wenn wir ein nices Modpack oder so gefunden haben, dass allen zumindest etwas passt würde ich dann einen\n [g-portal server mit 6gb und Infinitive slots](https://www.g-portal.com/de/order/step/one/minecraft) hosten.\n Ihr braucht nichts dazuzugeben.\n Ich hatte bei dem modpack an sowas wie [FTB Infinity Evolved Reloaded](https://www.curseforge.com/minecraft/modpacks/infinityevolved-reloaded) gedacht.\nDas Spielt in der 1.12.2",
-                                  color=discord.Color.purple())
-            await ctx.send(embed=embed)
+    @commands.command(name="nsfw")
+    async def nfsw_command(self, ctx):
+        if ctx.channel.is_nsfw():
+            await ctx.send("yes")
         else:
-            return
-
-
-    @commands.command(name="mc.server")
-    async def mc_server(self, ctx):
-        if 528982743623925781 == ctx.message.author.id:
-            await ctx.send("@here")
-            embed = discord.Embed(title="Mc Mod Server",
-                                  description=f"Ich habe mich jetzt erstmal für das [FTB Infinity Reloaded](https://www.curseforge.com/minecraft/modpacks/infinityevolved-reloaded/files) Modpack entschieden.\nDafür müsst ihr aber die [CurseForge App](https://download.curseforge.com/) Herunterladen und das Modpack dort Installieren (Soweit ich das weiß).\nIch würde den server dann zu Freitag Mittag/Nachmittag dann Mieten.\nPasst das Jedem?\nIhr könnt gerne noch eins zwei weitere leute nach einladen müssen nur wegen der Performance Gucken",
-                                  color=discord.Color.purple())
-            await ctx.send(embed=embed)
-        else:
-            return
+            await ctx.send("no")
+    @commands.command(name="LUNA", aliases=["LUNA?"])
+    async def WAS_IST_LUNA(self, ctx):
+        luna = "Was LUNA ist?\n"
+        luna1 = "LUNA ist ein KI versuch von Bobby. Sie Soll metadaten überwachen das Smarthome steuern usw. :)"
+        await ctx.send(luna + luna1)
 
 
 def setup(bot: BobbyBot):

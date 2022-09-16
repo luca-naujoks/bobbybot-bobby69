@@ -6,6 +6,8 @@ import youtube_dl
 from discord.ext import commands
 from discord.ext.commands import Context
 from bot import BobbyBot
+from pytube import YouTube
+import os
 
 import mysql.connector
 
@@ -26,7 +28,7 @@ class MP3(commands.Cog):
     def __init__(self, bot: BobbyBot):
         self.bot = bot
 
-    @commands.command(name="mp3_output", aliases=["convert", "mp3"])
+    """@commands.command(name="mp3_output", aliases=["convert", "mp3"])
     async def mp3_converter(self, ctx: Context, *, url):
         ydl_opts = {
             'format': 'bestaudio/best',
@@ -46,7 +48,8 @@ class MP3(commands.Cog):
         await ctx.send("Working on mp3")
         with youtube_dl.YoutubeDL(ydl_opts) as ydl:
             ydl.download(url)
-        await ctx.send(file=discord.File(ctx))
+        await ctx.send(file=discord.File(ctx))"""
+
 
 
 

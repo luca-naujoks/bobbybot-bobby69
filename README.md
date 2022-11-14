@@ -1,5 +1,4 @@
 # bobbybot-bobby69
-My Python discord Bot
 
 <pre>
 <h1>Commands:</h1>

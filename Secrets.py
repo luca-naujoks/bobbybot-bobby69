@@ -1,1 +1,1 @@
-BOT_TOKEN = "Your Key"
+BOT_TOKEN = "Your Bot Token"

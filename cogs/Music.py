@@ -14,10 +14,10 @@ from bot import BobbyBot
 import mysql.connector
 
 mydb = mysql.connector.connect(
-  host="192.168.178.32",
-  user="BobbyBot",
-  password="08Kasper06!Bt",
-  database="BobbyBot",
+  host="HOST IP OR NAME",
+  user="USER NAME",
+  password="USER PASSWORD",
+  database="UR DATABASE",
   port="3306"
 )
 
